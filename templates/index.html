@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static',filename='style.css') }}"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="content">
+        <div class="title">EmoFilter</div>
+        <div class="buttons">
+          <div class="button button-livestreaming">Livestreaming</div>
+          <div id="carica_img" class="button button-upload">Carica un'immagine</div>
+        </div>
+      </div>
+      <div class="copyright">Copyright &copy; 2022 "JojoSys"</div>
+    </div>
+
+    <div class="overlay"></div>
+
+    <div class="modal modal-upload">
+      <div class="dropzone">
+        <div class="subtitle">Trascina per caricare</div>
+        <div class="subsubtitle">o clicca per sfogliare</div>
+      </div>
+
+      <div class="button">Carica immagine</div>
+    </div>
+
+    <div class="modal modal-livestream">
+      <div class="stream">
+        <img id="im1" src="{{ url_for('video_feed') }}" width="100%" />
+        <!-- stream -->
+      </div>
+      <div class="istruzioni">Fai una faccia per applicare il filtro!</div>
+      <div class="button button-exit">Torna alla homepage</div>
+
+      <div class="button button-screen" onclick="save_img()">Screenshot</div>
+    </div>
+
+    <div class="modal modal_screenshot">
+      <div class="screenshot">
+        <canvas id="canvas" width="320" height="240"></canvas>
+      </div>
+      <div class="buttons share_buttons">
+        <div class="share">
+          <div class="icon">
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M5.62341 0.896225C3.2805 1.98082 1.80583 3.5179 0.806906 5.91722C-0.268969 8.50006 -0.268969 23.4999 0.806906 26.0828C1.80583 28.4821 3.2805 30.0192 5.62341 31.1038C7.27183 31.867 8.81619 32 16.0289 32C25.2123 32 27.1109 31.5815 29.4359 29.0443C31.6443 26.6348 32 24.8253 32 16C32 7.17466 31.6443 5.36521 29.4359 2.9557C27.1109 0.418498 25.2123 0 16.0289 0C8.81619 0 7.27183 0.133026 5.62341 0.896225ZM25.6783 3.77861C28.6674 5.38658 29.0962 6.92026 29.0962 16C29.0962 28.5525 28.542 29.1084 16.0289 29.1084C3.51571 29.1084 2.96156 28.5525 2.96156 16C2.96156 3.44751 3.51571 2.89161 16.0289 2.89161C22.8534 2.89161 24.2719 3.02221 25.6783 3.77861ZM23.4511 7.05086C23.2909 7.46935 23.392 8.04467 23.6756 8.32917C24.4282 9.08411 25.7083 8.42141 25.7083 7.27613C25.7083 6.07889 23.892 5.8978 23.4511 7.05086ZM12.1425 8.35344C5.79135 11.5718 5.79135 20.4282 12.1425 23.6466C14.8741 25.0307 17.1836 25.0307 19.9152 23.6466C26.2664 20.4282 26.2664 11.5718 19.9152 8.35344C18.7294 7.7524 16.9808 7.26108 16.0289 7.26108C15.0769 7.26108 13.3283 7.7524 12.1425 8.35344ZM20.0976 12.0893C21.3685 13.3647 21.5946 13.9546 21.5946 16C21.5946 18.0731 21.3743 18.6299 20.0124 19.9961C18.6505 21.3623 18.0954 21.5832 16.0289 21.5832C13.9623 21.5832 13.4072 21.3623 12.0453 19.9961C10.6887 18.6353 10.4632 18.0692 10.4632 16.0296C10.4632 13.5342 11.6968 11.5616 13.851 10.6125C15.6606 9.81527 18.4995 10.4862 20.0976 12.0893Z"
+                fill="#171C1C"
+              ></path>
+            </svg>
+          </div>
+          <div class="text" onclick="download('https://www.instagram.com')">
+            Condividi su Instagram
+          </div>
+        </div>
+
+        <div class="share">
+          <div class="icon">
+            <svg
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M0.969697 0.969697C0.0446061 1.89479 0 2.5857 0 16C0 29.4143 0.0446061 30.1052 0.969697 31.0303C1.89479 31.9554 2.5857 32 16 32C29.4143 32 30.1052 31.9554 31.0303 31.0303C31.9554 30.1052 32 29.4143 32 16C32 2.5857 31.9554 1.89479 31.0303 0.969697C30.1052 0.0446061 29.4143 0 16 0C2.5857 0 1.89479 0.0446061 0.969697 0.969697ZM29.0909 16V29.0909H25.2121H21.3333V24.2424V19.3939H23.2208C25.2625 19.3939 25.697 18.8815 25.697 16.4732C25.697 15.1879 25.5457 15.0749 23.6364 14.9367C21.8027 14.8044 21.5593 14.6439 21.4245 13.4783C21.1821 11.3775 22.0722 10.2594 24.1227 10.0897C25.8938 9.94327 25.9394 9.89091 25.9394 8V6.06061L23.6616 5.9137C19.3295 5.63491 16.9697 7.98594 16.9697 12.5818V15.0303H15.0303H13.0909V17.2121V19.3939H15.0303H16.9697V24.2424V29.0909H9.93939H2.90909V16V2.90909H16H29.0909V16Z"
+                fill="#171C1C"
+              ></path>
+            </svg>
+          </div>
+          <div class="text" onclick="download('https://www.facebook.com')">
+            Condividi su Facebook
+          </div>
+        </div>
+
+        <div class="share">
+          <div class="icon"></div>
+          <div class="text" onclick="download(null)">
+          <svg
+            version="1.1"
+            id="Capa_1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            x="0px"
+            y="0px"
+            viewBox="0 0 34.418 34.418"
+            style="enable-background: new 0 0 34.418 34.418"
+            xml:space="preserve"
+          >
+            <path
+              d="M32.335,11.606h-6.533v-1.009h6.533V11.606z M32.335,12.264h-6.533v1.011h6.533V12.264z
+              M32.331,7.687h-6.523V9.91h6.523V7.687z M34.418,5.297v23.827c-0.001,0.357-0.292,0.648-0.65,0.648h-9.397
+             c-0.359,0-0.649-0.291-0.649-0.649V5.297c0-0.358,0.29-0.65,0.649-0.65h9.397C34.127,4.647,34.418,4.939,34.418,5.297z
+              M33.119,5.944h-8.1v22.53h8.1V5.944z M32.335,13.932h-6.533v1.008h6.533V13.932z M31.272,21.45c0,1.162-0.939,2.099-2.097,2.099
+             c-1.16,0-2.099-0.938-2.099-2.099c0-1.158,0.94-2.098,2.099-2.098C30.333,19.352,31.272,20.293,31.272,21.45z M30.515,21.45
+             c0-0.739-0.6-1.341-1.341-1.341c-0.742,0-1.342,0.601-1.342,1.341s0.6,1.34,1.342,1.34C29.915,22.79,30.515,22.19,30.515,21.45z
+              M21.937,9.218v13.505c0,0.814-0.655,1.473-1.461,1.473H13.18c0,0-0.414,2.948,2.212,2.948v1.475H13.18H8.758H6.546v-1.473
+             c2.529,0,2.212-2.948,2.212-2.948H1.465C0.656,24.198,0,23.539,0,22.725V9.218c0-0.814,0.656-1.47,1.465-1.47h19.01
+             C21.282,7.748,21.937,8.404,21.937,9.218z M12.332,22.394c0-0.698-0.566-1.263-1.264-1.263c-0.699,0-1.266,0.565-1.266,1.263
+             s0.566,1.265,1.266,1.265C11.767,23.659,12.332,23.092,12.332,22.394z M20.371,9.311H1.568v11.387H20.37h0.001
+             C20.371,20.698,20.371,9.311,20.371,9.311z M11.081,21.603c-0.434,0-0.785,0.352-0.785,0.785s0.352,0.785,0.785,0.785
+             s0.785-0.352,0.785-0.785S11.515,21.603,11.081,21.603z"
+            />
+          </svg>
+          Salva sul computer
+        </div>
+      </div>
+    </div>
+
+    <!-- <script src="/system/static/main.js"></script> -->
+    <script src="{{ url_for('static',filename='main.js') }}"></script>
+    <script>
+      alert("Usando questo sistema accetti a fornire dati del tuo volto per scopi di ricerca");
+    </script>
+  </body>
+</html>
+
+
