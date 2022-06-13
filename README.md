@@ -1,7 +1,7 @@
 # Caso di studio Sistemi ad agenti - JojoSys
 Webapp per applicare in tempo reale un filtro in base alle emozioni rilevate.
 Membri del gruppo:
-- Decosmis Ivan, mat: 716486, mail: i.decosmis@studenti.uniba.it
+- De Cosmis Ivan, mat: 716486, mail: i.decosmis@studenti.uniba.it
 - Gramegna Simone, mat: 717041, mail: s.gramegna5@studenti.uniba.it
 - Canistro Federico, mat: 723320, mail: f.canistro@studenti.uniba.it
 - Galgano Giuseppe, mat: 717510, mail: g.galgano7@studenti.uniba.it
