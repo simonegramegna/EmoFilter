@@ -1,2 +1,4 @@
 *.jpg
 *.png
+__pycache__/
+emofilter_env/
